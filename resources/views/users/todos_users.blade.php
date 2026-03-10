@@ -1,5 +1,10 @@
 @extends('layouts.fe_layout')
 @section('content')
+    @if(session('message'))
+        <div class="alert alert-sucess">
+            <p>{{session('message')}}</p>
+         </div>
+    @endif
 
     <h2 class="text-center">Todos Os Users</h2><p></p>
            <table class="table table-striped">

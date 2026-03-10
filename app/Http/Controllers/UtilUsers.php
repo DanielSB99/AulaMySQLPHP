@@ -47,5 +47,20 @@ class UtilUsers extends Controller
 
         return back();
     }
+    public function storeUsers(Request $request){
+        $request->validate([
+            'name'=>'required|string|max:50',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|min:8',
+        ]);
+        User::insert([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>$request->password,
+        ]);
+        return redirect()->route('Users.todos')->with('message', 'User adicionado com sucesso!');
+
+    }
+
 
 }

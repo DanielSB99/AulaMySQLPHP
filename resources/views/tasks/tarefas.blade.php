@@ -1,6 +1,6 @@
 @extends('layouts.fe_layout')
 @section('content')
- <h2 class="text-center">Todos Os Users</h2><p></p>
+ <h2 class="text-center">Todas as Tarefas</h2><p></p>
            <table class="table table-striped">
   <thead>
     <tr>

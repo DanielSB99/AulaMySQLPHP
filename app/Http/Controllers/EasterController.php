@@ -50,5 +50,28 @@ class EasterController extends Controller
         return redirect()->route('Easter.tabelaEaster');
     }
 
+    public function addEaster() {
+
+        $users = DB::table('users')->get();
+        return view('easter.addEaster', compact('users'));
+    }
+
+     public function storeEaster(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'user_id' => 'required',
+            'valor_previsto' => 'required|numeric',
+
+        ]);
+
+        DB::table('easter_gift')->insert([
+            'nome_da_prenda' => $request->name,
+            'user_id' => $request->user_id,
+            'valor_previsto' => $request->valor_previsto,
+            
+        ]);
+
+        return redirect()->route('Easter.tabelaEaster')->with('message', 'Presente adicionado com sucesso!');
+    }
 
 }

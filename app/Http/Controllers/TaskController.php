@@ -29,6 +29,8 @@ class TaskController extends Controller
         return back();
     }
 
+
+
         protected function getTarefasFromDB(){
             $tasks = DB::table('tasks')
             ->join('users', 'tasks.user_id', '=', 'users.id')
@@ -37,5 +39,27 @@ class TaskController extends Controller
             return $tasks;
         }
 
+
+    public function addTarefas() {
+
+        $users = DB::table('users')->get();
+        return view('tasks.add_tasks', compact('users'));
+    }
+
+    public function storeTasks(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'descricaoTarefa' => 'required|string',
+            'user_id' => 'required',
+        ]);
+
+        DB::table('tasks')->insert([
+            'name' => $request->name,
+            'description' => $request->descricaoTarefa,
+            'user_id' => $request->user_id,
+        ]);
+
+        return redirect()->route('Tarefas.todos')->with('message', 'Tarefa adicionada com sucesso!');
+    }
 
 }

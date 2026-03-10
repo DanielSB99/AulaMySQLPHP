@@ -29,3 +29,9 @@ Route::get('/deleteTasks/{id}',[TaskController::class,'deleteTarefa'])->name('Ta
 Route::get('/tabelaeaster',[EasterController::class,'tabelaEaster'])->name('Easter.tabelaEaster');
 Route::get('/deleteEaster/{id}',[EasterController::class,'deleteEaster'])->name('Easter.delete');
 Route::get('/viewEaster/{id}',[EasterController::class,'viewEaster'])->name('Easter.view');
+
+Route::post('/store-users',[UtilUsers::class,'storeUsers'])->name('users.store');
+Route::post('/store-tasks',[TaskController::class,'storeTasks'])->name('tasks.store');
+Route::get('/add_tasks',[TaskController::class,'addTarefas'])->name('tasks.add');
+Route::get('/addEaster',[EasterController::class,'addEaster'])->name('Easter.add');
+Route::post('/storeEaster',[EasterController::class,'storeEaster'])->name('Easter.store');
