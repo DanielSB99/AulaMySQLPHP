@@ -35,3 +35,10 @@ Route::post('/store-tasks',[TaskController::class,'storeTasks'])->name('tasks.st
 Route::get('/add_tasks',[TaskController::class,'addTarefas'])->name('tasks.add');
 Route::get('/addEaster',[EasterController::class,'addEaster'])->name('Easter.add');
 Route::post('/storeEaster',[EasterController::class,'storeEaster'])->name('Easter.store');
+
+Route::put('users-update',[UtilUsers::class,'updateUsers'])->name('users.update');
+Route::put('tasks-update',[TaskController::class,'updateTasks'])->name('tasks.update');
+Route::put('easter-update',[EasterController::class,'updateEaster'])->name('Easter.update');
+
+
+

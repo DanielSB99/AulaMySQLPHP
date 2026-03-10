@@ -21,7 +21,7 @@
              <td>{{$tarefa->status == 1 ? 'Concluída' : 'Pendente'}}</td>
             <td>{{$tarefa->due_date}}</td>
             <td>{{$tarefa->responsavel}}</td>
-            <td><a class="btn btn-info" href="{{route('Tarefas.view',$tarefa->id)}}">Ver</a></td>
+            <td><a class="btn btn-info" href="{{route('Tarefas.view',$tarefa->id)}}">Ver/ Editar</a></td>
             <td><a href="{{ route('Tarefas.delete', $tarefa->id) }}" class="btn btn-danger">Apagar</a></td>
         </tr>
 

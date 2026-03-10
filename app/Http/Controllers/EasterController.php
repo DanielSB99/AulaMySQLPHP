@@ -15,11 +15,7 @@ class EasterController extends Controller
         ->get();
 
     foreach ($easterGifts as $gift) {
-        $diferenca = $gift->valor_previsto - $gift->valor_gasto;
-        if ($diferenca < 0) {
-            $diferenca = $diferenca * -1;
-        }
-        $gift->diferenca = $diferenca;
+        $gift->diferenca = abs($gift->valor_previsto - $gift->valor_gasto);
     }
 
     return view('easter.tabelaeaster', compact('easterGifts'));
@@ -33,14 +29,11 @@ class EasterController extends Controller
             ->select('easter_gift.*', 'users.name as user_name')
             ->where('easter_gift.id', $id)
             ->first();
-            $diferenca = $gift->valor_previsto - $gift->valor_gasto;
+            $gift->diferenca = abs($gift->valor_previsto - $gift->valor_gasto);
 
-            if ($diferenca < 0) {
-            $diferenca = $diferenca * -1;
-            }
-            $gift->diferenca = $diferenca;
+            $users = DB::table('users')->get();
 
-        return view('easter.viewEaster', compact('gift'));
+        return view('easter.viewEaster', compact('gift', 'users'));
     }
 
 
@@ -59,7 +52,7 @@ class EasterController extends Controller
      public function storeEaster(Request $request) {
         $request->validate([
             'name' => 'required|string|max:50',
-            'user_id' => 'required',
+            'user_id' => 'required|exists:users,id',
             'valor_previsto' => 'required|numeric',
 
         ]);
@@ -68,10 +61,25 @@ class EasterController extends Controller
             'nome_da_prenda' => $request->name,
             'user_id' => $request->user_id,
             'valor_previsto' => $request->valor_previsto,
-            
+
         ]);
 
         return redirect()->route('Easter.tabelaEaster')->with('message', 'Presente adicionado com sucesso!');
+    }
+    public function updateEaster(Request $request){
+        $request->validate([
+            'name'=>'required|string|max:50',
+            'user_id' => 'required|exists:users,id',
+            'valor_previsto' => 'required|numeric',
+            'valor_gasto' => 'numeric',
+        ]);
+        DB::table('easter_gift')->where('id',$request->id)->update([
+            'nome_da_prenda' => $request->name,
+            'user_id' => $request->user_id,
+            'valor_previsto' => $request->valor_previsto,
+            'valor_gasto'=>$request->valor_gasto
+            ]);
+            return redirect()->route('Easter.tabelaEaster')->with('message', 'Atualizado com sucesso!');
     }
 
 }

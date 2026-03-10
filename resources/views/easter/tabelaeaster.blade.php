@@ -21,7 +21,7 @@
             <td>{{ $gift->valor_gasto }} €</td>
             <td>{{ $gift->diferenca }} €</td>
             <td>{{ $gift->user_name }}</td>
-            <td><a class="btn btn-info" href="{{ route('Easter.view', $gift->id) }}">Ver Detalhes</a></td>
+            <td><a class="btn btn-info" href="{{ route('Easter.view', $gift->id) }}">Ver/ Editar</a></td>
             <td><a href="{{ route('Easter.delete', $gift->id) }}" class="btn btn-danger">Apagar</a></td>
         </tr>
 

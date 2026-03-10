@@ -28,7 +28,14 @@ class UtilUsers extends Controller
 
     public function todosUsers() {
         //Carregar todos os dados da tabela de users
-        $usersFromDB = User::get();
+        $search = request()->query('search')? request()->query('search') :null;
+        $usersFromDB = DB::table('users');
+        if($search){
+            $usersFromDB =$usersFromDB->where('name','LIKE', "%{$search}%")
+            ->orWhere('email','LIKE', "%{$search}%")
+            ->orWhere('nif','LIKE', "%{$search}%");
+        };
+        $usersFromDB=$usersFromDB->get();
         //->first();
         //->where('password','cesae1234')
 
@@ -61,6 +68,19 @@ class UtilUsers extends Controller
         return redirect()->route('Users.todos')->with('message', 'User adicionado com sucesso!');
 
     }
+
+    public function updateUsers(Request $request){
+        $request->validate([
+            'name'=>'required|string|max:50',
+            'nif'=>'min:8',
+        ]);
+        User::where('id',$request->id)->update([
+            'name' => $request->name,
+            'nif'=>$request->nif
+            ]);
+            return redirect()->route('Users.todos')->with('message', 'Atualizado com sucesso!');
+    }
+
 
 
 }

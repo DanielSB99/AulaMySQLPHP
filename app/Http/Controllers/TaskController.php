@@ -21,7 +21,8 @@ class TaskController extends Controller
             ->select('tasks.*', 'users.name as responsavel')
             ->where('tasks.id', $id)
             ->first();
-        return view('tasks.viewT', compact('tarefa'));
+        $users = DB::table('users')->get();
+        return view('tasks.viewT', compact('tarefa', 'users'));
     }
 
     public function deleteTarefa($id){
@@ -60,6 +61,20 @@ class TaskController extends Controller
         ]);
 
         return redirect()->route('Tarefas.todos')->with('message', 'Tarefa adicionada com sucesso!');
+    }
+    public function updateTasks(Request $request){
+        $request->validate([
+            'name'=>'required|string|max:50',
+            'user_id'=>'required',
+            'status'=>'required|boolean',
+        ]);
+        DB::table('tasks')->where('id',$request->id)->update([
+            'name' => $request->name,
+            'description' => $request->descricaoTarefa,
+            'user_id' => $request->user_id,
+            'status'=>$request->status
+            ]);
+            return redirect()->route('Tarefas.todos')->with('message', 'Atualizado com sucesso!');
     }
 
 }
