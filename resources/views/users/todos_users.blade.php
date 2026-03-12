@@ -14,8 +14,13 @@
       <th scope="col">Nome</th>
       <th scope="col">Email</th>
       <th scope="col">Nif</th>
+      @auth
       <th scope="col">Detalhes</th>
-      <th scope="col">Apagar</th>
+      @if(Auth::user()->email == 'admin@gmail.com')
+        <th scope="col">Apagar</th>
+        @endif
+      @endauth
+
     </tr>
   </thead>
   <tbody>
@@ -25,8 +30,14 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->nif }}</td>
-            <td><a class="btn btn-info" href="{{route('users.view',$user->id)}}">Ver/ Editar</a></td>
-            <td><a href="{{ route('users.delete', $user->id) }}" class="btn btn-danger">Apagar</a></td>
+            @auth
+                <td><a class="btn btn-info" href="{{route('users.view',$user->id)}}">Ver/ Editar</a></td>
+                @if(Auth::user()->email == 'admin@gmail.com')
+        <td><a href="{{ route('users.delete', $user->id) }}" class="btn btn-danger">Apagar</a></td>
+        @endif
+
+            @endauth
+
 
         </tr>
 

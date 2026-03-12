@@ -1,6 +1,9 @@
 @extends('layouts.fe_layout')
 @section('content')
-    <h6>Homepage da Turma {{ $classname }}</h6>
+@auth
+    <h1>Olá {{Auth::user()->name}}</h1>
+@endauth    <h6>Homepage da Turma {{ $classname }}</h6>
+
     <p>
         O curso tem {{$cursoInfo['Classnr']}} estudantes,que é realizado em {{$cursoInfo['hrs']}} horas e a responsavel é {{$cursoInfo['responsable']}}
 
